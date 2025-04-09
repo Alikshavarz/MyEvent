@@ -1,0 +1,9 @@
+{
+    "disk":[
+        {
+            "name": "database",
+            "mountTo": "database"
+        }
+    ],
+    "app": "myevent"
+}
