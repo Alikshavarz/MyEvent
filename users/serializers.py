@@ -18,7 +18,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )    
 
- # ایجاد تنظیمات پیش‌فرض برای کاربر
+ # ایجاد تنظیمات پیش‌ فرض برای کاربر
  
         from event.models import UserSettings
         UserSettings.objects.create(user=user)

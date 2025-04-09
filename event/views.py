@@ -13,8 +13,7 @@ class IsCreatorReadOnly(permissions.BasePermission):
             return True
         return obj.creator == request.user
     
-
-#لیست ایون ها و ایونت های جدید
+# لیست ایونت ها و ایجاد ایونت جدید
 class EventListCreateAPIView(APIView):
 
     def get_permissions(self):
@@ -33,7 +32,7 @@ class EventListCreateAPIView(APIView):
 
         serializer = EventCreateUpdateSerializer(data= request.data, context= {'request': request})
         if serializer.is_valid():
-            #بررسی محدودیت رویداد های باز
+            #بررسی محدودیت ایونت های باز
             user = request.user
             active_events_count = Event.objects.filter(creator= user, is_active=True).count()
             max_events, _ = UserSettings.objects.get_or_create(user=user)
@@ -46,17 +45,17 @@ class EventListCreateAPIView(APIView):
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-# جزئیات، ویرایش و حذف یک رویداد
+# جزئیات، ویرایش و حذف یک ایونت
 class EventUpdateDestroyApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorReadOnly]
 
     def get_object(self, pk):
         return get_object_or_404(pk)
     
-
+# اگر کاربر سازنده ایونت باشد، اطلاعات کامل را نمایش می‌دهیم
     def get(self, request, pk):
         event = self.get_object(pk)
-# اگر کاربر سازنده رویداد باشد، اطلاعات کامل را نمایش می‌دهیم
+
         if request.user.is_authenticated and event.creator == request.user:
             serializer = EventDetailSerializer(event)
         else:
@@ -94,7 +93,7 @@ class EventUpdateDestroyApiView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-#ثبت نام در رویداد
+#ثبت نام در ایونت
 class EventJoinApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 

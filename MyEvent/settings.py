@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     #myapp
     'event',
+    'users'
               
 ]
 

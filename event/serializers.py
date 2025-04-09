@@ -50,6 +50,7 @@ class EventCreateUpdateSerializer(serializers.ModelSerializer):
         active_event_count = Event.objects.filter(creator=user, is_active=True).count()
         max_events, _ = UserSettings.objects.get_or_create(user=user)
 
+        # بررسی محدودیت تعداد ایونت های  باز
         if active_event_count >= max_events.max_active_events:
             raise serializers.ValidationError("شما به حداکثر تعداد ایونت مجاز رسیدید")
         
