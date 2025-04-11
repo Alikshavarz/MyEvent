@@ -50,7 +50,7 @@ class EventUpdateDestroyApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorReadOnly]
 
     def get_object(self, pk):
-        return get_object_or_404(pk)
+        return get_object_or_404(Event, pk= pk)
     
 # اگر کاربر سازنده ایونت باشد، اطلاعات کامل را نمایش می‌دهیم
     def get(self, request, pk):
@@ -131,7 +131,7 @@ class EventLeaveApiView(APIView):
             return Response({"detail": "شما با موفقیت از ایونت خارج شدید"}, status=status.HTTP_200_OK)
 
         except UserEvent.DoesNotExist :
-            return Response({"detail": "شما در این ایونت ثبت نان نکرده اید"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "شما در این ایونت ثبت نام نکرده اید"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 #ایونت های ساخته شده توسط کاربر
@@ -149,7 +149,7 @@ class JoinedEventApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request ):
-        event = Event.objects.filter(participants_user = request.user)
+        event = Event.objects.filter(user = request.user)
         serializer = EventSerializer(event, many=True)
         return Response(serializer.data)    
 

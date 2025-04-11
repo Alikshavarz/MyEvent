@@ -1,0 +1,38 @@
+ 1. ثبت‌نام کاربر:
+ POST /api/register/
+ Body: { "username": "test_user", "email": "test@example.com", "password": "password123" }
+
+ 2. دریافت توکن JWT:
+ POST /api/token/
+ Body: { "username": "test_user", "password": "password123" }
+
+ 3. ایجاد رویداد جدید:
+ POST /api/events/
+ Headers:  {توکن JWT}
+ Body: { "name": "رویداد تست", "description": "توضیحات رویداد", "location": "تهران", "date_time": "2025-05-01T14:00:00Z", "capacity": 50 }
+
+ 4. مشاهده لیست رویدادها:
+ GET /api/events/
+
+ 5. مشاهده جزئیات یک رویداد:
+ GET /api/events/{event_id}/
+ 6. به‌روزرسانی رویداد:
+ PUT /api/events/{event_id}/
+ Headers:  {توکن JWT}
+ Body: { "name": "رویداد به‌روزرسانی شده", "description": "توضیحات جدید", "location": "تهران", "date_time": "2025-05-01T15:00:00Z", "capacity": 100 }
+
+ 7. ثبت‌نام در یک رویداد:
+ POST /api/events/{event_id}/join/
+ Headers:  {توکن JWT}
+
+ 8. خروج از یک رویداد:
+ POST /api/events/{event_id}/leave/
+ Headers:  {توکن JWT}
+
+ 9. مشاهده رویدادهای ایجاد شده توسط کاربر:
+ GET /api/events/my_events/
+ Headers: {توکن JWT}
+
+ 10. مشاهده رویدادهای ثبت‌نام شده توسط کاربر:
+ GET /api/events/joined_events/
+ Headers: {توکن JWT}

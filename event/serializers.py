@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ParticipantSeriliazer(serializers.ModelSerializer):
    
-    user = UserSerializer
+    user = UserSerializer()
 
     class Meta:
         model = UserEvent
